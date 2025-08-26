@@ -1,0 +1,29 @@
+server:
+  port: 1003  # 本模块 HTTP 端口
+
+app:
+  kafka:
+    topic: demo.topic.v1         # 要发送/创建的主题名
+    auto-create-topic: true      # 开启后，会注册 NewTopic bean 从而在启动时创建主题（见 KafkaTopicsConfig）
+
+spring:
+  kafka:
+    # 你的 Kafka 地址（PLAINTEXT）
+    bootstrap-servers: yiqiquhuxi.cn:9092
+
+    # 生产者配置
+    producer:
+      # key/value 序列化
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        # 不在 header 写入类型信息，便于异构系统消费
+        spring.json.add.type.headers: false
+
+      # 可靠性
+      acks: all
+      retries: 3
+
+# 说明：
+# Boot 已自动装配 KafkaAdmin；一旦存在 NewTopic bean，将在启动期创建/修改主题。:contentReference[oaicite:4]{index=4}
+# JSON（反）序列化推荐使用 Spring 提供的 JsonSerializer/JsonDeserializer。:contentReference[oaicite:5]{index=5}

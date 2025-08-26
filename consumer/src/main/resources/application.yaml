@@ -1,0 +1,30 @@
+server:
+  port: 1004  # 本模块端口（通常只看日志）
+
+app:
+  kafka:
+    topic: demo.topic.v1  # 要订阅的主题名（与 provider 保持一致）
+
+spring:
+  kafka:
+    bootstrap-servers: yiqiquhuxi.cn:9092
+
+    consumer:
+      # 消费者组语义：组内消息“只被一个实例处理”；不同组相当于“广播到每组”
+      group-id: demo-group
+
+      # 反序列化器（与生产端匹配）
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      # 首次启动从头消费
+      auto-offset-reset: earliest
+
+      properties:
+        spring.json.use.type.headers: false   # 忽略头里的类型（即使有）
+        spring.json.value.default.type: org.example.consumer.kafka.MessagePayload
+        spring.json.trusted.packages: "*"
+
+# 说明：
+# - JsonDeserializer 的默认类型键为 spring.json.value.default.type（源码常量 VALUE_DEFAULT_TYPE）。:contentReference[oaicite:7]{index=7}
+# - @KafkaListener 支持使用 ${...} 占位符读取上述配置。:contentReference[oaicite:8]{index=8}
