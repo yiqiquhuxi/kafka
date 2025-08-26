@@ -8,18 +8,10 @@ app:
 
 spring:
   kafka:
-    # 你的 Kafka 地址（PLAINTEXT）
     bootstrap-servers: yiqiquhuxi.cn:9092
-
-    # 生产者配置
     producer:
-      # key/value 序列化
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        # 不在 header 写入类型信息，便于异构系统消费
-        spring.json.add.type.headers: false
-
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer  # 发送字符串
       # 可靠性
       acks: all
       retries: 3
