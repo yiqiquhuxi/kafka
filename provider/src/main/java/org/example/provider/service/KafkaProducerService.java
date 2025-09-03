@@ -1,6 +1,8 @@
 package org.example.provider.service;
 
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import org.example.provider.kafka.MessagePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +15,7 @@ import java.util.UUID;
 public class KafkaProducerService {
 
     @Autowired
-    private KafkaTemplate<String, MessagePayload> kafka;
+    private KafkaTemplate<String, String> kafka;
 
     @Value("${app.kafka.topic}")
     private String topic;
@@ -25,6 +27,7 @@ public class KafkaProducerService {
                 content,
                 System.currentTimeMillis()
         );
-        kafka.send(topic, payload);
+        String jsonStr = JSONUtil.toJsonStr(payload);
+        kafka.send(topic, jsonStr);
     }
 }
