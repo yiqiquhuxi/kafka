@@ -18,6 +18,7 @@ public class KafkaConsumerListener {
     )
     public void onMessage(String msg) {
         try {
+            // json反序列化成对象
             MessagePayload payload = JSON.parseObject(msg, MessagePayload.class);
             log.info("✅ received: id={}, content={}, ts={}",
                     payload.id(), payload.content(), payload.ts());

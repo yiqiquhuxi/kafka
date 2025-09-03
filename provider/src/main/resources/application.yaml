@@ -9,6 +9,7 @@ app:
 spring:
   kafka:
     bootstrap-servers: yiqiquhuxi.cn:9092
+    # 数据网络IO 序列化方式
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer  # 发送字符串
@@ -16,6 +17,3 @@ spring:
       acks: all
       retries: 3
 
-# 说明：
-# Boot 已自动装配 KafkaAdmin；一旦存在 NewTopic bean，将在启动期创建/修改主题。:contentReference[oaicite:4]{index=4}
-# JSON（反）序列化推荐使用 Spring 提供的 JsonSerializer/JsonDeserializer。:contentReference[oaicite:5]{index=5}
