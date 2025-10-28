@@ -1,10 +1,10 @@
 package org.example.provider.controller;
 
+import jakarta.validation.Valid;
+import org.example.provider.domain.User;
 import org.example.provider.service.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/provider")
@@ -19,6 +19,13 @@ public class ProviderController {
         kafkaProducerService.send("done");
         return "done";
     }
+
+
+    @PostMapping("get")
+    public String get(@RequestBody @Valid User user){
+        return "get";
+    }
+
 
 
 
